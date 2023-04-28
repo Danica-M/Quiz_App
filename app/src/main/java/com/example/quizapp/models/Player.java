@@ -8,6 +8,7 @@ public class Player {
     private String email;
     private String password;
 
+    public Player(){};
     public Player(String playerID, String firstName, String lastName, String email, String password) {
         this.playerID = playerID;
         this.firstName = firstName;

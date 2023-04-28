@@ -5,14 +5,12 @@ public class TournamentResultRecord {
     private String tourID;
     private String tourPlayerID;
     private int tourScore;
-    private boolean like;
-
-    public TournamentResultRecord(String trrID, String tourID, String tourPlayerID, int tourScore,boolean like) {
+    public TournamentResultRecord(String trrID, String tourID, String tourPlayerID, int tourScore) {
         this.trrID = trrID;
         this.tourID = tourID;
         this.tourPlayerID = tourPlayerID;
         this.tourScore = tourScore;
-        this.like = like;
+
     }
 
     public String getTrrID() {
@@ -39,11 +37,4 @@ public class TournamentResultRecord {
         this.tourScore = tourScore;
     }
 
-    public boolean isLike() {
-        return like;
-    }
-
-    public void setLike(boolean like) {
-        this.like = like;
-    }
 }

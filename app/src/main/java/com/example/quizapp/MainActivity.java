@@ -15,11 +15,13 @@ import android.widget.Toast;
 import com.example.quizapp.fragments.Fragment_past;
 import com.example.quizapp.fragments.Fragment_upcoming;
 import com.example.quizapp.fragments.fragment_ongoing;
+import com.example.quizapp.models.Controller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView .OnNavigationItemSelectedListener {
 
+    Controller controller;
     Fragment fragment;
     FloatingActionButton createButton;
     BottomNavigationView bottomNav;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         createButton = findViewById(R.id.createButton);
         bottomNav = findViewById(R.id.bottomAppBar);
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case R.id.past:
+                createButton.setVisibility(View.GONE);
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.flFragment, new Fragment_past())

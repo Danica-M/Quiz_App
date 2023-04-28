@@ -1,5 +1,8 @@
 package com.example.quizapp.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Tournament {
     private String tournamentID;
     private String name;
@@ -8,8 +11,10 @@ public class Tournament {
     private String startDate;
     private String endDate;
     private String status;
+    private List<Question> questions;
+    private Integer like;
 
-    public Tournament(String tournamentID, String name, String category, String difficulty, String startDate, String endDate, String status) {
+    public Tournament(String tournamentID, String name, String category, String difficulty, String startDate, String endDate, String status, Integer like) {
         this.tournamentID = tournamentID;
         this.name = name;
         this.category = category;
@@ -17,8 +22,11 @@ public class Tournament {
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.questions = new ArrayList<>();
+        this.like = like;
     }
 
+    public Tournament(){};
     public String getName() {
         return name;
     }
@@ -65,5 +73,21 @@ public class Tournament {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public Integer getLike() {
+        return like;
+    }
+
+    public void setLike(Integer like) {
+        this.like = like;
     }
 }
