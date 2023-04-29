@@ -12,6 +12,7 @@ public class Tournament {
     private String endDate;
     private String status;
     private List<Question> questions;
+    private List<TournamentResultRecord> participants;
     private Integer like;
 
     public Tournament(String tournamentID, String name, String category, String difficulty, String startDate, String endDate, String status, Integer like) {
@@ -23,10 +24,15 @@ public class Tournament {
         this.endDate = endDate;
         this.status = status;
         this.questions = new ArrayList<>();
+        this.participants = new ArrayList<>();
         this.like = like;
     }
 
     public Tournament(){};
+
+    public String getTournamentID() {
+        return tournamentID;
+    }
     public String getName() {
         return name;
     }
@@ -89,5 +95,13 @@ public class Tournament {
 
     public void setLike(Integer like) {
         this.like = like;
+    }
+
+    public List<TournamentResultRecord> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<TournamentResultRecord> participants) {
+        this.participants = participants;
     }
 }

@@ -54,7 +54,6 @@ public class Admin_create_tournament extends AppCompatActivity {
     EditText tourName, startDate, endDate;
     Spinner category;
     RadioGroup difficulty;
-    SimpleDateFormat sdf;
 
     Integer selectedCategory;
     ArrayList<Integer> categoryIDs;
@@ -68,7 +67,7 @@ public class Admin_create_tournament extends AppCompatActivity {
         controller = new Controller();
         categories = new ArrayList<>();
         categoryIDs = new ArrayList<>();
-        sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
         setContentView(R.layout.admin_create_tournament);
         cancel = findViewById(R.id.cancelButton);
         create = findViewById(R.id.createButton);
@@ -122,7 +121,7 @@ public class Admin_create_tournament extends AppCompatActivity {
         if (dType == 1){
             try {
                 Date date = null;
-                date = sdf.parse(String.valueOf(startDate.getText()));
+                date = controller.getSdf().parse(String.valueOf(startDate.getText()));
                 calendar.setTime(date);
                 calendar.add(Calendar.DAY_OF_YEAR,1);
             } catch (ParseException e) {
@@ -138,7 +137,7 @@ public class Admin_create_tournament extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         calendar.set(year, month, day);
                         // Update the edit text with the selected date
-                        String selectedDate = sdf.format(calendar.getTimeInMillis());
+                        String selectedDate = controller.getSdf().format(calendar.getTimeInMillis());
                         editText.setText(selectedDate);
                     }
                 },
@@ -185,7 +184,6 @@ public class Admin_create_tournament extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
-
     public void createTournament(){
         String tName, tDifficulty, tStart, tEnd, tStatus;
         tName = tourName.getText().toString().toUpperCase().trim();
@@ -198,8 +196,8 @@ public class Admin_create_tournament extends AppCompatActivity {
             if(TextUtils.isEmpty(tName) || TextUtils.isEmpty(tStart) || TextUtils.isEmpty(tEnd)){
                 Toast.makeText(Admin_create_tournament.this, "Please Complete all fields", Toast.LENGTH_SHORT).show();
             }else{
-                Date sDate = sdf.parse(tStart);
-                Date eDate = sdf.parse(tEnd);
+                Date sDate = controller.getSdf().parse(tStart);
+                Date eDate = controller.getSdf().parse(tEnd);
                 Date today = new Date();
 
                 Calendar cal1 = Calendar.getInstance();
@@ -224,8 +222,6 @@ public class Admin_create_tournament extends AppCompatActivity {
                 cal3.set(Calendar.MILLISECOND, 0);
 
                 int result = cal1.compareTo(cal2);
-                Log.d("TAG", "date1: "+sDate+" Today: "+today);
-                Log.d("TAG", "res: "+cal3.compareTo(cal1));
                 if(result>0) {
                     Toast.makeText(Admin_create_tournament.this, "End date must be after start date", Toast.LENGTH_SHORT).show();
                 }else {
@@ -281,16 +277,9 @@ public class Admin_create_tournament extends AppCompatActivity {
                                 Toast.makeText(Admin_create_tournament.this, "Tournament creation is unsuccessfully", Toast.LENGTH_SHORT).show();
                             }
 
-
-
                             } catch (JSONException ex) {
                             throw new RuntimeException(ex);
                         }
-
-
-
-
-
                     }
 
                 }, new Response.ErrorListener() {

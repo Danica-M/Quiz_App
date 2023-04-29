@@ -16,6 +16,7 @@ import com.example.quizapp.Adapter;
 import com.example.quizapp.R;
 import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;
+import com.example.quizapp.models.TournamentResultRecord;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +36,7 @@ public class Fragment_past extends Fragment {
     Controller controller;
     private RecyclerView ongoingRecycler;
     private Adapter adapter;
+    private String uID;
 
     private ArrayList<Tournament> pTournaments;
     // TODO: Rename parameter arguments, choose names that match
@@ -77,6 +79,7 @@ public class Fragment_past extends Fragment {
         }
         controller = new Controller();
         pTournaments = new ArrayList<>();
+        uID = "asasa";
     }
 
     @Override
@@ -96,7 +99,6 @@ public class Fragment_past extends Fragment {
     }
 
     public void getPastTournament(){
-
         DatabaseReference tourRef =  controller.getReference().child("tournaments");
         Query query = tourRef.orderByChild("startDate");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -105,8 +107,15 @@ public class Fragment_past extends Fragment {
 
                 for(DataSnapshot tourItems: snapshot.getChildren()){
                     Tournament tournament = tourItems.getValue(Tournament.class);
-                    if(tournament != null && tournament.getStatus().equals("PAST")){
-                        pTournaments.add(tournament);
+                    if(tournament != null && tournament.getParticipants() != null){
+
+                        for (TournamentResultRecord result : tournament.getParticipants()) {
+                            if (result.getTourPlayerID().equals(uID)) {
+                                pTournaments.add(tournament);
+                                break;
+                            }
+                        }
+
                     }
                 }
                 if(pTournaments.size()==0){Toast.makeText(getActivity(), "No past tournament", Toast.LENGTH_LONG).show();}
@@ -121,4 +130,5 @@ public class Fragment_past extends Fragment {
 
 
     }
+
 }

@@ -12,13 +12,25 @@
         android:theme="@style/Theme.QuizApp"
         tools:targetApi="31">
         <activity
+            android:name=".Registration"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User_Tournament_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin_Activity"
+            android:exported="false" />
+        <activity
             android:name=".Admin_update_tournament"
             android:exported="false" />
         <activity
             android:name=".Admin_create_tournament"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

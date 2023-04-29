@@ -21,28 +21,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView .OnNavigationItemSelectedListener {
 
-    Controller controller;
-    Fragment fragment;
-    FloatingActionButton createButton;
     BottomNavigationView bottomNav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        createButton = findViewById(R.id.createButton);
         bottomNav = findViewById(R.id.bottomAppBar);
         bottomNav.setOnNavigationItemSelectedListener(this);
         bottomNav.setSelectedItemId(R.id.ongoing);
 
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Admin_create_tournament.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -64,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case R.id.past:
-                createButton.setVisibility(View.GONE);
+
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.flFragment, new Fragment_past())
