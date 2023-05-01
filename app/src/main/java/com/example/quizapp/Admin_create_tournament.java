@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,7 +20,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -37,15 +35,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class Admin_create_tournament extends AppCompatActivity {
 
@@ -70,7 +64,7 @@ public class Admin_create_tournament extends AppCompatActivity {
 
         setContentView(R.layout.admin_create_tournament);
         cancel = findViewById(R.id.cancelButton);
-        create = findViewById(R.id.createButton);
+        create = findViewById(R.id.updateButton);
         tourName = findViewById(R.id.tourName);
         startDate = findViewById(R.id.startDate);
         endDate = findViewById(R.id.endDate);
@@ -96,7 +90,7 @@ public class Admin_create_tournament extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Admin_create_tournament.this, MainActivity.class);
+                Intent intent = new Intent(Admin_create_tournament.this, Admin_Activity.class);
                 startActivity(intent);
             }
         });
@@ -270,7 +264,7 @@ public class Admin_create_tournament extends AppCompatActivity {
                             Tournament t = controller.addTournament(tName,categories.get(tCategory), tDifficulty, tStart, tEnd, tStatus, questionList);
                             if(t!=null){
                                 Toast.makeText(Admin_create_tournament.this, "Tournament created successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Admin_create_tournament.this, MainActivity.class);
+                                Intent intent = new Intent(Admin_create_tournament.this, Admin_Activity.class);
                                 startActivity(intent);
                             }
                             else{

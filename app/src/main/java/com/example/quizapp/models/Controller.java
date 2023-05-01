@@ -25,11 +25,17 @@ public class Controller {
     private FirebaseDatabase firebaseDatabase;
     private static DatabaseReference reference;
     private static SimpleDateFormat sdf;
+    public static String currentUser = "admin";
+
 
     public Controller() {
         this.firebaseDatabase = FirebaseDatabase.getInstance();
         this.reference = firebaseDatabase.getReference();
         this.sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    }
+
+    public static String getCurrentUser() {
+        return currentUser;
     }
 
     public static SimpleDateFormat getSdf() {
@@ -52,10 +58,10 @@ public class Controller {
 
     public Tournament addTournament(String tName, String tCategory, String tDifficulty, String tStart, String tEnd, String tStatus, List<Question> questionList){
         try{
-            String id = reference.push().getKey();
-            Tournament tournament = new Tournament(id, tName, tCategory, tDifficulty, tStart, tEnd, tStatus,0);
+            String tournamentID = reference.push().getKey();
+            Tournament tournament = new Tournament(tournamentID, tName, tCategory, tDifficulty, tStart, tEnd, tStatus,0);
             tournament.setQuestions(questionList);
-            reference.child("tournaments").child(id).setValue(tournament);
+            reference.child("tournaments").child(tournamentID).setValue(tournament);
             return tournament;
         }catch(Exception e){
             Log.d("TAG", "error: "+e.getMessage());

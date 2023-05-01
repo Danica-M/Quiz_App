@@ -1,12 +1,16 @@
 package com.example.quizapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -26,7 +30,7 @@ public class Admin_Activity extends AppCompatActivity {
 
     RecyclerView adminRecycler;
 
-    AdminAdapter adminAdapter;
+    Adapter adapter;
     Controller controller;
 
     FloatingActionButton createButton;
@@ -39,9 +43,12 @@ public class Admin_Activity extends AppCompatActivity {
         allTournaments = new ArrayList<>();
         createButton = findViewById(R.id.create);
         getAllTournament();
+
         adminRecycler = findViewById(R.id.adminRecycler);
         adminRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adminAdapter = new AdminAdapter(getApplicationContext(), allTournaments);
+        adapter = new Adapter(getApplicationContext(), allTournaments);
+        adminRecycler.setAdapter(adapter);
+
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +72,11 @@ public class Admin_Activity extends AppCompatActivity {
                         allTournaments.add(tournament);
                     }
                 }
+                Log.d("TAG", "size: "+allTournaments.size());
                 if(allTournaments.size()==0){Toast.makeText(Admin_Activity.this, "No past tournament", Toast.LENGTH_LONG).show();}
-                adminAdapter.notifyDataSetChanged();
+
+                adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -75,4 +85,5 @@ public class Admin_Activity extends AppCompatActivity {
             }
         });
     }
+
 }

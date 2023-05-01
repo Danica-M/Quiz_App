@@ -1,19 +1,29 @@
 package com.example.quizapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.quizapp.models.Controller;
+import com.example.quizapp.models.Tournament;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -21,9 +31,11 @@ import java.util.Date;
 
 public class Admin_update_tournament extends AppCompatActivity {
 
+    FloatingActionButton delete;
     Controller controller;
     EditText tourName, startDate, endDate;
     String tournamentID;
+    Button update, cancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +44,13 @@ public class Admin_update_tournament extends AppCompatActivity {
         tourName = findViewById(R.id.tourName);
         startDate = findViewById(R.id.startDate);
         endDate = findViewById(R.id.endDate);
+        delete = findViewById(R.id.deleteBtn);
+        update = findViewById(R.id.updateButton);
+        cancel = findViewById(R.id.cancelButton);
         Intent intent = getIntent();
         tournamentID = intent.getStringExtra("tournamentID");
+        getTournament(tournamentID);
+
 
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +63,47 @@ public class Admin_update_tournament extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDate(endDate,1);
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(Admin_update_tournament.this)
+                        .setTitle("Tournament Deletion Confirmation")
+                        .setMessage("Are you sure you want to delete this tournament?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                controller.deleteTournament(tournamentID,getApplicationContext());
+                                Intent aIntent = new Intent(Admin_update_tournament.this, Admin_Activity.class);
+                                startActivity(aIntent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what should happen when negative button is clicked
+                                //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .show();
+
+            }
+        });
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateTournament();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent aIntent = new Intent(Admin_update_tournament.this, Admin_Activity.class);
+                startActivity(aIntent);
             }
         });
     }
@@ -87,7 +145,7 @@ public class Admin_update_tournament extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    public void createTournament(){
+    public void updateTournament(){
         String tName, tStart, tEnd, tStatus;
         tName = tourName.getText().toString().toUpperCase().trim();
         tStart = startDate.getText().toString();
@@ -140,6 +198,27 @@ public class Admin_update_tournament extends AppCompatActivity {
         }catch (ParseException e){
             e.printStackTrace();
         }
+    }
+
+    public void getTournament(String tID){
+        DatabaseReference tour = Controller.getReference().child("tournaments").child(tID);
+        tour.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Tournament tournament = snapshot.getValue(Tournament.class);
+                if(tournament!=null){
+                    tourName.setText(tournament.getName());
+                    startDate.setText(tournament.getStartDate());
+                    endDate.setText(tournament.getEndDate());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
 }

@@ -1,7 +1,9 @@
 package com.example.quizapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     Context context;
@@ -48,6 +50,23 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }else if( stat.equals("UPCOMING")){
             holder.tourHolder.setCardBackgroundColor(Color.YELLOW);
         }
+        final int finalPosition = position;
+
+        if(Controller.currentUser == "admin"){
+            holder.tourHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Tournament toDelete = tournamentList.get(finalPosition);
+//                    Log.d("TAG", "tId: "+toDelete.getTournamentID());
+                    Intent bIntent = new Intent(view.getContext(), Admin_update_tournament.class);
+                    bIntent.putExtra("tournamentID", toDelete.getTournamentID());
+                    bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(bIntent);
+                }
+            });
+        }
+
+
 
     }
 
@@ -68,6 +87,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             endDate = itemView.findViewById(R.id.end);
             like  = itemView.findViewById(R.id.like);
             tourHolder = itemView.findViewById(R.id.tourHolder);
+
+
         }
     }
 }
