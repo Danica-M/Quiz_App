@@ -22,7 +22,8 @@
             android:exported="false" />
         <activity
             android:name=".Admin_Activity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".Admin_update_tournament"
             android:exported="false" />

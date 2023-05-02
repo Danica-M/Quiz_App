@@ -25,7 +25,7 @@ public class Controller {
     private FirebaseDatabase firebaseDatabase;
     private static DatabaseReference reference;
     private static SimpleDateFormat sdf;
-    public static String currentUser = "admin";
+    public static String currentUser = "player";
 
 
     public Controller() {

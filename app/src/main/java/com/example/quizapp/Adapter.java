@@ -1,6 +1,7 @@
 package com.example.quizapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,14 +54,27 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }
         final int finalPosition = position;
 
+        Tournament clickedTournament = tournamentList.get(finalPosition);
         if(Controller.currentUser == "admin"){
             holder.tourHolder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Tournament toDelete = tournamentList.get(finalPosition);
-//                    Log.d("TAG", "tId: "+toDelete.getTournamentID());
+//                    Log.d("TAG", "tId: "+clickedTournament.getTournamentID());
                     Intent bIntent = new Intent(view.getContext(), Admin_update_tournament.class);
-                    bIntent.putExtra("tournamentID", toDelete.getTournamentID());
+                    bIntent.putExtra("tournamentID", clickedTournament.getTournamentID());
+                    bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(bIntent);
+                }
+            });
+        }else if(Controller.currentUser == "player"){
+            holder.tourHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+//                    Log.d("TAG", "tId: "+clickedTournament.getTournamentID());
+                    Intent bIntent = new Intent(view.getContext(), User_Tournament_Activity.class);
+                    bIntent.putExtra("tourID", clickedTournament.getTournamentID());
                     bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(bIntent);
                 }
