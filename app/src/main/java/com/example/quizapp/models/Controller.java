@@ -19,13 +19,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Controller {
 
     private FirebaseDatabase firebaseDatabase;
     private static DatabaseReference reference;
     private static SimpleDateFormat sdf;
-    public static String currentUser = "player";
+    public static User currentUser;
 
 
     public Controller() {
@@ -34,8 +36,12 @@ public class Controller {
         this.sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     }
 
-    public static String getCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
+    }
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
 
     public static SimpleDateFormat getSdf() {
@@ -97,6 +103,26 @@ public class Controller {
             Toast.makeText(context, "something went wrong", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public User registerUser(String userID, String fName, String lName, String email, String password) {
+        try {
+            User user = new User(userID, fName, lName, email, password, "player");
+            reference.child("users").child(userID).setValue(user);
+            return user;
+
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    // validation for firstname and lastname
+    public static boolean validateString(String name) {
+        Pattern pattern = Pattern.compile(".*\\d.*");
+        Matcher matcher = pattern.matcher(name);
+        if (matcher.matches()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

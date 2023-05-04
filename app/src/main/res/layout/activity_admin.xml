@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00BCD4"
-    android:padding="5dp"
+    android:padding="10dp"
     tools:context=".Admin_Activity">
 
     <EditText
@@ -31,6 +31,7 @@
         android:layout_width="409dp"
         android:layout_height="729dp"
         android:layout_marginTop="20dp"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="@+id/searchButton"
         app:layout_constraintStart_toStartOf="@+id/searchText"
         app:layout_constraintTop_toBottomOf="@+id/searchText" />
@@ -58,4 +59,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/exitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/create"
+        app:layout_constraintEnd_toEndOf="@+id/create"
+        app:srcCompat="@drawable/icon_exit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

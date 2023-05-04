@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,13 +30,14 @@ public class User_Tournament_Activity extends AppCompatActivity {
 
     String tournamentID;
     List<Question> questionList;
-    int counter;
+    int counter,correctAns;
 
     Question ques;
-    TextView question, tName;
+    TextView question, tName, score, total;
     Button submitBtn;
     RadioGroup userAnswer;
     RadioButton op1, op2, op3, op4;
+    ProgressBar progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,10 @@ public class User_Tournament_Activity extends AppCompatActivity {
 
         getQuestions();
         counter = 0;
+        correctAns = 0;
+        progress = findViewById(R.id.progressBar);
+        score = findViewById(R.id.score);
+        total = findViewById(R.id.total);
         tName = findViewById(R.id.tName);
         question = findViewById(R.id.question);
         submitBtn = findViewById(R.id.submitBtn);
@@ -60,14 +66,32 @@ public class User_Tournament_Activity extends AppCompatActivity {
                 int radioButtonId = userAnswer.getCheckedRadioButtonId();
                 RadioButton selected = findViewById(radioButtonId);
                 if(selected!=null){
-                    if(submitBtn.getText().equals("Submit")){
+                    if(counter == questionList.size()-1 && submitBtn.getText().equals("Submit")){
                         check(selected);
-                        submitBtn.setText("Next");
+                        submitBtn.setText("Finish");
+                        submitBtn.setBackgroundResource(R.color.orange2);
                         counter++;
                     }else{
-                        loadQuestions(counter);
-                        submitBtn.setText("Submit");
+                        if(submitBtn.getText().equals("Submit")){
+                        check(selected);
+                        submitBtn.setText("Next");
+                        submitBtn.setBackgroundResource(R.color.orange2);
+                        counter++;
+                        }else if (submitBtn.getText().equals("Finish")){
+                            Intent intent1 = new Intent(User_Tournament_Activity.this, Quiz_Result.class);
+                            intent1.putExtra("tourID", tournamentID);
+                            intent1.putExtra("score", String.valueOf(correctAns));
+                            intent1.putExtra("quizLength", String.valueOf(questionList.size()));
+                            startActivity(intent1);
+
+                        }
+                        else{
+                            loadQuestions(counter);
+                            submitBtn.setText("Submit");
+                            submitBtn.setBackgroundResource(R.color.orange);
+                        }
                     }
+
                 }else{
                     Toast.makeText(User_Tournament_Activity.this, "Please select your answer",Toast.LENGTH_SHORT).show();
                 }
@@ -90,11 +114,10 @@ public class User_Tournament_Activity extends AppCompatActivity {
                         tName.setText(tournament.getName());
                     }
                 }
-
                 loadQuestions(counter);
-                Log.d("TAG", "question size: "+questionList.size());
+                total.setText(String.valueOf(questionList.size()));
+                score.setText(String.valueOf(correctAns));
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -108,7 +131,6 @@ public class User_Tournament_Activity extends AppCompatActivity {
         op2.setBackgroundResource(R.drawable.quiz_button);
         op3.setBackgroundResource(R.drawable.quiz_button);
         op4.setBackgroundResource(R.drawable.quiz_button);
-
         ques = questionList.get(counter);
         question.setText(ques.getQuestion());
         List<String> all = ques.getAllAnswers();
@@ -116,7 +138,7 @@ public class User_Tournament_Activity extends AppCompatActivity {
         op2.setText(all.get(1));
         op3.setText(all.get(2));
         op4.setText(all.get(3));
-
+        progress.setProgress(counter);
     }
 
     public void check(RadioButton selected){
@@ -125,6 +147,8 @@ public class User_Tournament_Activity extends AppCompatActivity {
         Log.d("TAG", "a: "+ques.getCorrectAnswer());
         if(selected.getText().equals(ques.getCorrectAnswer())){
             selected.setBackgroundResource(R.drawable.correct_option);
+            correctAns++;
+            score.setText(String.valueOf(correctAns));
         }else{
             selected.setBackgroundResource(R.drawable.incorrect_option);
             for (int i = 0; i < userAnswer.getChildCount(); i++) {
@@ -136,8 +160,29 @@ public class User_Tournament_Activity extends AppCompatActivity {
 
             }
         }
-
-
     }
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Exit")
+                .setMessage("Are you sure you want to exit from this tournament?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent(User_Tournament_Activity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+
+
+
+
+
+
+
 
 }

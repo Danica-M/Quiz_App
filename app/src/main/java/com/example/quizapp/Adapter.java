@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,17 @@ import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     Context context;
     ArrayList<Tournament> tournamentList;
+    private List<Tournament> originalList;
 
     public Adapter(Context context, ArrayList<Tournament> tournamentList){
         this.context = context;
         this.tournamentList = tournamentList;
+        originalList = new ArrayList<>(tournamentList);
     }
 
 
@@ -51,11 +55,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             holder.tourHolder.setCardBackgroundColor(Color.BLUE);
         }else if( stat.equals("UPCOMING")){
             holder.tourHolder.setCardBackgroundColor(Color.YELLOW);
+        }else{
+            holder.tourHolder.setCardBackgroundColor(Color.GRAY);
         }
         final int finalPosition = position;
 
         Tournament clickedTournament = tournamentList.get(finalPosition);
-        if(Controller.currentUser == "admin"){
+        if(Controller.getCurrentUser().getUserType() == "admin"){
             holder.tourHolder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -66,13 +72,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     context.startActivity(bIntent);
                 }
             });
-        }else if(Controller.currentUser == "player"){
+        }else{
             holder.tourHolder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-
-//                    Log.d("TAG", "tId: "+clickedTournament.getTournamentID());
                     Intent bIntent = new Intent(view.getContext(), User_Tournament_Activity.class);
                     bIntent.putExtra("tourID", clickedTournament.getTournamentID());
                     bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -80,11 +83,31 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 }
             });
         }
+//        if(Controller.getCurrentUser().getUserType() == "player")
 
 
 
     }
 
+    public void resetList() {
+        tournamentList.clear();
+        tournamentList.addAll(originalList);
+        notifyDataSetChanged();
+    }
+
+    public void filterList(String searchText) {
+        tournamentList.clear();
+        if (TextUtils.isEmpty(searchText)) {
+            tournamentList.addAll(originalList);
+        } else {
+            for (Tournament tournament : originalList) {
+                if (tournament.getName().toLowerCase().contains(searchText.toLowerCase())) {
+                    tournamentList.add(tournament);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return tournamentList.size();

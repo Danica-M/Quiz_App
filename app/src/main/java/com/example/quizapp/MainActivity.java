@@ -18,6 +18,7 @@ import com.example.quizapp.fragments.fragment_ongoing;
 import com.example.quizapp.models.Controller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView .OnNavigationItemSelectedListener {
 
@@ -67,25 +68,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
     private void logoutUser(){
-        new AlertDialog.Builder(MainActivity.this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Logout Confirmation")
-                .setMessage("Are you sure to exit the application?")
+        new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this)
+                .setTitle("Exit Confirmation")
+                .setMessage("Are you sure you want to log out?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(MainActivity.this, "logout", Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent nlIntent = new Intent(MainActivity.this, Login.class);
+                        startActivity(nlIntent);
+                        finishAffinity();
+                        FirebaseAuth.getInstance().signOut();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        //set what should happen when negative button is clicked
-                        //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
                     }
-                })
-                .show();
+                }).show();
     }
 
 }
