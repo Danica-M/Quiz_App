@@ -16,6 +16,7 @@ import com.example.quizapp.Adapter;
 import com.example.quizapp.R;
 import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;
+import com.example.quizapp.models.TournamentResultRecord;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -107,7 +108,12 @@ public class fragment_ongoing extends Fragment {
                 for(DataSnapshot tourItems: snapshot.getChildren()){
                     Tournament tournament = tourItems.getValue(Tournament.class);
                     if(tournament != null && tournament.getStatus().equals("ONGOING")){
-                        oTournaments.add(tournament);
+                        for (TournamentResultRecord result : tournament.getParticipants()) {
+                            if (result.getTourPlayerID().equals(Controller.getCurrentUser().getUserID())) {
+
+                            }else{oTournaments.add(tournament);}
+                        }
+
                     }
                 }
                 if(oTournaments.size()==0){Toast.makeText(getActivity(), "No past tournament", Toast.LENGTH_LONG).show();}

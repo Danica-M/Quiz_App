@@ -104,6 +104,39 @@ public class Controller {
         }
 
     }
+
+    public void addTournamentParticipants(String tournamentID, TournamentResultRecord part, int like){
+        try{
+            int tLikes;
+            DatabaseReference tRef = reference.child("tournaments").child(tournamentID);
+            tRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Tournament tournament = snapshot.getValue(Tournament.class);
+                    if(tournament!=null){
+                        int tLikes = tournament.getLike() + like;
+                        List<TournamentResultRecord> participants = tournament.getParticipants();
+                        if(participants==null){
+                            participants = new ArrayList<TournamentResultRecord>();
+                        }
+                        participants.add(part);
+                        tRef.child("like").setValue(tLikes);
+                        tRef.child("participants").setValue(participants);
+
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+        }catch(Exception e){
+
+        }
+    }
     public User registerUser(String userID, String fName, String lName, String email, String password) {
         try {
             User user = new User(userID, fName, lName, email, password, "player");

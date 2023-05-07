@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00BCD4"
+    android:background="@color/light"
     android:padding="10dp"
     tools:context=".Admin_Activity">
 
@@ -35,7 +35,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="Search"/>
+        app:queryHint="Search" />
 
     <!--    <ImageButton-->
     <!--        android:id="@+id/searchButton"-->
@@ -66,10 +66,10 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:clickable="true"
-        app:backgroundTint="#FFEB3B"
+        app:backgroundTint="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@drawable/icon_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/exitBtn"
@@ -77,6 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:clickable="true"
+        app:backgroundTint="@color/red"
         app:layout_constraintBottom_toTopOf="@+id/create"
         app:layout_constraintEnd_toEndOf="@+id/create"
         app:srcCompat="@drawable/icon_exit" />

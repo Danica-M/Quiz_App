@@ -79,7 +79,7 @@ public class Fragment_past extends Fragment {
         }
         controller = new Controller();
         pTournaments = new ArrayList<>();
-        uID = "asasa";
+        uID = Controller.getCurrentUser().getUserID();
     }
 
     @Override
@@ -112,7 +112,6 @@ public class Fragment_past extends Fragment {
                         for (TournamentResultRecord result : tournament.getParticipants()) {
                             if (result.getTourPlayerID().equals(uID)) {
                                 pTournaments.add(tournament);
-                                break;
                             }
                         }
 

@@ -8,6 +8,7 @@ public class TournamentResultRecord {
         this.tourScore = tourScore;
 
     }
+    public TournamentResultRecord(){}
 
     public String getTourPlayerID() {
         return tourPlayerID;

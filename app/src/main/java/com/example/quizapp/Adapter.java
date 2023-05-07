@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizapp.models.Controller;
@@ -52,7 +53,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.like.setText(tournamentList.get(position).getLike().toString());
         String stat = tournamentList.get(position).getStatus();
         if(stat.equals("ONGOING")){
-            holder.tourHolder.setCardBackgroundColor(Color.BLUE);
+//            holder.tourHolder.setCardBackgroundColor(Color.BLUE);
+            holder.tourHolder.setBackgroundResource(R.drawable.one);
             if(Controller.getCurrentUser().getUserType().equals("player")){
                 holder.tourHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -65,9 +67,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 });
             }
         }else if( stat.equals("UPCOMING")){
-            holder.tourHolder.setCardBackgroundColor(Color.YELLOW);
+//            holder.tourHolder.setBackgroundColor(Color.YELLOW);
+            holder.tourHolder.setBackgroundResource(R.drawable.two);
         }else{
-            holder.tourHolder.setCardBackgroundColor(Color.GRAY);
+//            holder.tourHolder.setBackgroundColor(Color.GRAY);
+            holder.tourHolder.setBackgroundResource(R.drawable.three);
         }
 
         if(Controller.getCurrentUser().getUserType().equals("admin") ){
@@ -84,10 +88,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }else{
 
         }
-//        if(Controller.getCurrentUser().getUserType() == "player")
-
-
-
     }
     public void setFilteredList(ArrayList<Tournament> filteredList){
         this.tournamentList = filteredList;
@@ -102,7 +102,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name, category, difficulty, startDate, endDate, like;
-        CardView tourHolder;
+        ConstraintLayout tourHolder;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
