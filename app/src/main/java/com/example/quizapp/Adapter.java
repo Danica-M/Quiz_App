@@ -19,18 +19,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     Context context;
     ArrayList<Tournament> tournamentList;
-    private List<Tournament> originalList;
 
     public Adapter(Context context, ArrayList<Tournament> tournamentList){
         this.context = context;
         this.tournamentList = tournamentList;
-        originalList = new ArrayList<>(tournamentList);
     }
 
 
@@ -44,6 +43,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
+        Tournament clickedTournament = tournamentList.get(position);
         holder.name.setText(tournamentList.get(position).getName());
         holder.category.setText(tournamentList.get(position).getCategory());
         holder.difficulty.setText(tournamentList.get(position).getDifficulty());
@@ -53,15 +53,24 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String stat = tournamentList.get(position).getStatus();
         if(stat.equals("ONGOING")){
             holder.tourHolder.setCardBackgroundColor(Color.BLUE);
+            if(Controller.getCurrentUser().getUserType().equals("player")){
+                holder.tourHolder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent bIntent = new Intent(view.getContext(), User_Tournament_Activity.class);
+                        bIntent.putExtra("tourID", clickedTournament.getTournamentID());
+                        bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(bIntent);
+                    }
+                });
+            }
         }else if( stat.equals("UPCOMING")){
             holder.tourHolder.setCardBackgroundColor(Color.YELLOW);
         }else{
             holder.tourHolder.setCardBackgroundColor(Color.GRAY);
         }
-        final int finalPosition = position;
 
-        Tournament clickedTournament = tournamentList.get(finalPosition);
-        if(Controller.getCurrentUser().getUserType() == "admin"){
+        if(Controller.getCurrentUser().getUserType().equals("admin") ){
             holder.tourHolder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -73,41 +82,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 }
             });
         }else{
-            holder.tourHolder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent bIntent = new Intent(view.getContext(), User_Tournament_Activity.class);
-                    bIntent.putExtra("tourID", clickedTournament.getTournamentID());
-                    bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(bIntent);
-                }
-            });
+
         }
 //        if(Controller.getCurrentUser().getUserType() == "player")
 
 
 
     }
-
-    public void resetList() {
-        tournamentList.clear();
-        tournamentList.addAll(originalList);
+    public void setFilteredList(ArrayList<Tournament> filteredList){
+        this.tournamentList = filteredList;
         notifyDataSetChanged();
     }
 
-    public void filterList(String searchText) {
-        tournamentList.clear();
-        if (TextUtils.isEmpty(searchText)) {
-            tournamentList.addAll(originalList);
-        } else {
-            for (Tournament tournament : originalList) {
-                if (tournament.getName().toLowerCase().contains(searchText.toLowerCase())) {
-                    tournamentList.add(tournament);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
+
     @Override
     public int getItemCount() {
         return tournamentList.size();

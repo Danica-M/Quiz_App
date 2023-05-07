@@ -72,17 +72,18 @@
         app:layout_constraintStart_toStartOf="@+id/tourName"
         app:layout_constraintTop_toBottomOf="@+id/tourName" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/updateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="20dp"
+        android:background="@color/blue"
         android:text="Update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,6 +100,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:clickable="true"
+        app:backgroundTint="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon_delete" />

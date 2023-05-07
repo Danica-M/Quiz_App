@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.quizapp.models.Controller;
@@ -32,12 +33,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Admin_Activity extends AppCompatActivity {
 
     RecyclerView adminRecycler;
 
-    EditText searchText;
+    SearchView search;
     Adapter adapter;
     Controller controller;
 
@@ -52,28 +54,40 @@ public class Admin_Activity extends AppCompatActivity {
         allTournaments = new ArrayList<>();
         createButton = findViewById(R.id.create);
         exitButton = findViewById(R.id.exitBtn);
-        searchText = findViewById(R.id.searchText);
-        searchBtn = findViewById(R.id.searchButton);
         getAllTournament();
+        search = findViewById(R.id.searchView);
+        search.clearFocus();
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return true;
+            }
+        });
 
         adminRecycler = findViewById(R.id.adminRecycler);
         adminRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new Adapter(getApplicationContext(), allTournaments);
         adminRecycler.setAdapter(adapter);
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = searchText.getText().toString();
-                if (TextUtils.isEmpty(text)) {
-                    // Reset the data to the original list
-                    adapter.resetList();
-                } else {
-                    // Filter the data based on the search text
-                    adapter.filterList(text);
-                }
-            }
-        });
+//        searchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String text = searchText.getText().toString();
+//                if (TextUtils.isEmpty(text)) {
+//                    // Reset the data to the original list
+//                    adapter.resetList();
+//                } else {
+//                    // Filter the data based on the search text
+//                    adapter.filterList(text);
+//                }
+//            }
+//        });
 
 
         createButton.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +148,22 @@ public class Admin_Activity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error Occurred: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void filterList(String text){
+        ArrayList<Tournament> filteredList = new ArrayList<>();
+        for(Tournament item:allTournaments){
+            if(item.getName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(item);
+            }
+        }
+        if(filteredList.isEmpty()){
+            adapter.setFilteredList(filteredList);
+            Toast.makeText(this, "No Tournament found with this name", Toast.LENGTH_SHORT).show();
+        }else{
+
+            adapter.setFilteredList(filteredList);
+        }
     }
 
 }

@@ -128,8 +128,9 @@
                     android:textSize="48sp"
                     android:textStyle="bold" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/goToSignIn"
+                    android:textColor="@color/white"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -139,8 +140,9 @@
                     android:text="I already have an account"
                     android:textSize="16sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/signUpBtn"
+                    android:textColor="@color/white"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

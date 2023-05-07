@@ -73,8 +73,9 @@
                 android:padding="10dp"
                 android:textSize="20sp" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signInBtn"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pass1"
@@ -84,8 +85,9 @@
                 android:background="@drawable/button_custom"
                 android:text="Sign in" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/goToSignUp"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/signInBtn"
