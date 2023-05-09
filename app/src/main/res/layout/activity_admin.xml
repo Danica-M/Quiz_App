@@ -8,24 +8,6 @@
     android:padding="10dp"
     tools:context=".Admin_Activity">
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/searchText"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="10dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:layout_marginEnd="5dp"-->
-    <!--        android:layout_weight="1"-->
-    <!--        android:background="@drawable/edittext_rounded"-->
-    <!--        android:ems="10"-->
-    <!--        android:hint="search"-->
-    <!--        android:inputType="textPersonName"-->
-    <!--        android:padding="5dp"-->
-    <!--        android:textSize="20sp"-->
-    <!--        app:layout_constraintEnd_toStartOf="@+id/searchButton"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
@@ -37,23 +19,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:queryHint="Search" />
 
-    <!--    <ImageButton-->
-    <!--        android:id="@+id/searchButton"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:layout_marginEnd="10dp"-->
-    <!--        android:background="@drawable/edittext_rounded"-->
-    <!--        android:padding="7dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:srcCompat="@drawable/icon_search" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/adminRecycler"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:padding="15dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/searchView"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="@+id/searchView"
@@ -63,23 +36,24 @@
         android:id="@+id/create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
         app:backgroundTint="@color/green"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/exitBtn"
+        app:layout_constraintEnd_toEndOf="@+id/exitBtn"
+        app:layout_constraintStart_toStartOf="@+id/exitBtn"
         app:srcCompat="@drawable/icon_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/exitBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_width="57dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
         app:backgroundTint="@color/red"
-        app:layout_constraintBottom_toTopOf="@+id/create"
-        app:layout_constraintEnd_toEndOf="@+id/create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/icon_exit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

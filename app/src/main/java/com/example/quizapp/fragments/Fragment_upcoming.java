@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quizapp.Adapter;
@@ -33,6 +34,7 @@ public class Fragment_upcoming extends Fragment {
     Controller controller;
     private RecyclerView upcomingRecycler;
     private Adapter adapter;
+    private TextView none2;
     private ArrayList<Tournament> tournaments;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -85,6 +87,7 @@ public class Fragment_upcoming extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_upcoming, container, false);
 
+        none2 = view.findViewById(R.id.none2);
         upcomingRecycler = view.findViewById(R.id.upRecycler);
         upcomingRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         getUpcomingTournament();
@@ -109,7 +112,10 @@ public class Fragment_upcoming extends Fragment {
                        tournaments.add(tournament);
                    }
                }
-               if(tournaments.size()==0){Toast.makeText(getActivity(), "No past tournament", Toast.LENGTH_LONG).show();}
+               if(tournaments.size()==0){
+                   none2.setText("No upcoming tournament");
+                   none2.setVisibility(View.VISIBLE);
+               }
                adapter.notifyDataSetChanged();
            }
 

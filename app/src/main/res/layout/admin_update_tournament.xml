@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90A6CC"
+    android:background="@color/light"
     tools:context=".Admin_update_tournament">
 
     <EditText
@@ -18,7 +18,7 @@
         android:ems="10"
         android:hint="End Date"
         android:inputType="date"
-        android:padding="5dp"
+        android:padding="10dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/startDate"
         app:layout_constraintStart_toStartOf="@+id/startDate"
@@ -28,11 +28,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Create Tournament"
+        android:layout_marginTop="70dp"
+        android:text="Update Tournament"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textSize="20sp"
+        android:textColor="@color/dark_blue"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +52,7 @@
         android:ems="10"
         android:hint="Tournament Name"
         android:inputType="textPersonName"
-        android:padding="5dp"
+        android:padding="10dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +68,7 @@
         android:ems="10"
         android:hint="Start Date"
         android:inputType="date"
-        android:padding="5dp"
+        android:padding="10dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/tourName"
         app:layout_constraintStart_toStartOf="@+id/tourName"
@@ -78,8 +80,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/blue"
+        android:background="@color/green"
         android:text="Update"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -90,6 +93,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginBottom="20dp"
         android:text="Cancel"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -100,7 +104,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:clickable="true"
-        app:backgroundTint="@color/orange"
+        app:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon_delete" />

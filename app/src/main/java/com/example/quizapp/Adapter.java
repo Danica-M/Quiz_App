@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;
+import com.example.quizapp.models.TournamentResultRecord;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -47,25 +48,36 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         Tournament clickedTournament = tournamentList.get(position);
         holder.name.setText(tournamentList.get(position).getName());
         holder.category.setText(tournamentList.get(position).getCategory());
-        holder.difficulty.setText(tournamentList.get(position).getDifficulty());
+        holder.difficulty.setText(tournamentList.get(position).getDifficulty().toUpperCase());
         holder.startDate.setText(tournamentList.get(position).getStartDate());
         holder.endDate.setText(tournamentList.get(position).getEndDate());
         holder.like.setText(tournamentList.get(position).getLike().toString());
         String stat = tournamentList.get(position).getStatus();
         if(stat.equals("ONGOING")){
 //            holder.tourHolder.setCardBackgroundColor(Color.BLUE);
-            holder.tourHolder.setBackgroundResource(R.drawable.one);
-            if(Controller.getCurrentUser().getUserType().equals("player")){
-                holder.tourHolder.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent bIntent = new Intent(view.getContext(), User_Tournament_Activity.class);
-                        bIntent.putExtra("tourID", clickedTournament.getTournamentID());
-                        bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(bIntent);
+            if(tournamentList.get(position).getParticipants() != null) {
+                for (TournamentResultRecord result : tournamentList.get(position).getParticipants()) {
+                    if (result.getTourPlayerID().equals(Controller.getCurrentUser().getUserID())) {
+                        holder.tourHolder.setBackgroundResource(R.drawable.three);
                     }
-                });
+                }
             }
+            else{
+                holder.tourHolder.setBackgroundResource(R.drawable.one);
+                if(Controller.getCurrentUser().getUserType().equals("player")){
+                    holder.tourHolder.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent bIntent = new Intent(view.getContext(), User_Tournament_Activity.class);
+                            bIntent.putExtra("tourID", clickedTournament.getTournamentID());
+                            bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(bIntent);
+                        }
+                    });
+                }
+
+            }
+
         }else if( stat.equals("UPCOMING")){
 //            holder.tourHolder.setBackgroundColor(Color.YELLOW);
             holder.tourHolder.setBackgroundResource(R.drawable.two);

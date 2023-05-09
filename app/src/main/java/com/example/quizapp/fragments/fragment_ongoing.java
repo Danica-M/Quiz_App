@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quizapp.Adapter;
@@ -34,7 +35,7 @@ public class fragment_ongoing extends Fragment {
     Controller controller;
     private RecyclerView ongoingRecycler;
     private Adapter adapter;
-
+    private TextView none1;
     private ArrayList<Tournament> oTournaments;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -86,11 +87,13 @@ public class fragment_ongoing extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
 
+        none1 = view.findViewById(R.id.none1);
         ongoingRecycler = view.findViewById(R.id.onRecycler);
         ongoingRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         getOngoingTournament();
 
         adapter = new Adapter(getContext(), oTournaments);
+        adapter.notifyDataSetChanged();
         ongoingRecycler.setAdapter(adapter);
 
         return view;
@@ -108,15 +111,22 @@ public class fragment_ongoing extends Fragment {
                 for(DataSnapshot tourItems: snapshot.getChildren()){
                     Tournament tournament = tourItems.getValue(Tournament.class);
                     if(tournament != null && tournament.getStatus().equals("ONGOING")){
-                        for (TournamentResultRecord result : tournament.getParticipants()) {
-                            if (result.getTourPlayerID().equals(Controller.getCurrentUser().getUserID())) {
+//                        oTournaments.add(tournament);
+                        if(tournament.getParticipants() != null){
+                            for (TournamentResultRecord result : tournament.getParticipants()) {
+                                if (result.getTourPlayerID().equals(Controller.getCurrentUser().getUserID())) {
 
-                            }else{oTournaments.add(tournament);}
-                        }
+                                }else{oTournaments.add(tournament);}
+                            }
+                        }else{oTournaments.add(tournament);}
+
 
                     }
                 }
-                if(oTournaments.size()==0){Toast.makeText(getActivity(), "No past tournament", Toast.LENGTH_LONG).show();}
+                if(oTournaments.size()==0){
+                    none1.setText("No ongoing tournament");
+                    none1.setVisibility(View.VISIBLE);
+                }
                 adapter.notifyDataSetChanged();
             }
 

@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quizapp.Adapter;
+import com.example.quizapp.MainActivity;
 import com.example.quizapp.R;
 import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;
@@ -36,6 +38,7 @@ public class Fragment_past extends Fragment {
     Controller controller;
     private RecyclerView ongoingRecycler;
     private Adapter adapter;
+    private TextView none;
     private String uID;
 
     private ArrayList<Tournament> pTournaments;
@@ -80,6 +83,7 @@ public class Fragment_past extends Fragment {
         controller = new Controller();
         pTournaments = new ArrayList<>();
         uID = Controller.getCurrentUser().getUserID();
+
     }
 
     @Override
@@ -88,6 +92,7 @@ public class Fragment_past extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_past, container, false);
 
+        none = view.findViewById(R.id.none);
         ongoingRecycler = view.findViewById(R.id.paRecycler);
         ongoingRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         getPastTournament();
@@ -117,7 +122,10 @@ public class Fragment_past extends Fragment {
 
                     }
                 }
-                if(pTournaments.size()==0){Toast.makeText(getActivity(), "No past tournament", Toast.LENGTH_LONG).show();}
+                if(pTournaments.size()==0){
+                    none.setText("No past participated tournament");
+                    none.setVisibility(View.VISIBLE);
+                }
                 adapter.notifyDataSetChanged();
             }
 

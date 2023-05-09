@@ -1,12 +1,16 @@
 package com.example.quizapp;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +52,9 @@ public class Login extends AppCompatActivity {
                 email = l_email.getText().toString();
                 pass = l_pass.getText().toString();
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
-                    Toast.makeText(Login.this, "Login form incomplete", Toast.LENGTH_SHORT).show();
+                    Log.d("TAG", "clicked");
+
+                    Toast.makeText(getBaseContext(), "Login form incomplete", Toast.LENGTH_SHORT).show();
                 } else {
                     mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -85,7 +91,6 @@ public class Login extends AppCompatActivity {
                 User currentUser = Controller.getCurrentUser();
                 if (currentUser != null) {
                     if (currentUser.getUserType().equals("admin")) {
-                        Log.d("TAG", "userT: "+currentUser.getUserType());
                         finishAffinity();
                         Intent intent = new Intent(Login.this, Admin_Activity.class);
                         startActivity(intent);

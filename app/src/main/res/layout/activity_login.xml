@@ -26,6 +26,7 @@
         android:clickable="false"
         app:cardCornerRadius="50dp"
         app:cardElevation="8dp"
+        app:cardPreventCornerOverlap="false"
         app:contentPadding="30dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
@@ -75,7 +76,6 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signInBtn"
-                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pass1"
@@ -83,18 +83,19 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_custom"
-                android:text="Sign in" />
+                android:text="Sign in"
+                android:textColor="@color/white" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/goToSignUp"
-                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/signInBtn"
                 android:layout_alignParentBottom="false"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_custom"
-                android:text="I dont have an account" />
+                android:text="I dont have an account"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/textView7"

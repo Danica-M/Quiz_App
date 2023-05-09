@@ -43,7 +43,6 @@ public class Admin_Activity extends AppCompatActivity {
     Adapter adapter;
     Controller controller;
 
-    ImageButton searchBtn;
     FloatingActionButton createButton, exitButton;
     ArrayList<Tournament> allTournaments;
     @Override
@@ -56,7 +55,7 @@ public class Admin_Activity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitBtn);
         getAllTournament();
         search = findViewById(R.id.searchView);
-        search.clearFocus();
+//        search.clearFocus();
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -75,19 +74,7 @@ public class Admin_Activity extends AppCompatActivity {
         adapter = new Adapter(getApplicationContext(), allTournaments);
         adminRecycler.setAdapter(adapter);
 
-//        searchBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String text = searchText.getText().toString();
-//                if (TextUtils.isEmpty(text)) {
-//                    // Reset the data to the original list
-//                    adapter.resetList();
-//                } else {
-//                    // Filter the data based on the search text
-//                    adapter.filterList(text);
-//                }
-//            }
-//        });
+
 
 
         createButton.setOnClickListener(new View.OnClickListener() {
