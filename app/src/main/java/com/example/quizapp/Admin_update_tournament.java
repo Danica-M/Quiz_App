@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
+
 import android.widget.Toast;
 
 import com.example.quizapp.models.Controller;
@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class Admin_update_tournament extends AppCompatActivity {
 
@@ -117,9 +118,8 @@ public class Admin_update_tournament extends AppCompatActivity {
 
         if (dType == 1){
             try {
-                Date date = null;
-                date = controller.getSdf().parse(String.valueOf(startDate.getText()));
-                calendar.setTime(date);
+                Date date = Controller.getSdf().parse(String.valueOf(startDate.getText()));
+                calendar.setTime(Objects.requireNonNull(date));
                 calendar.add(Calendar.DAY_OF_YEAR,1);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -134,7 +134,7 @@ public class Admin_update_tournament extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         calendar.set(year, month, day);
                         // Update the edit text with the selected date
-                        String selectedDate = controller.getSdf().format(calendar.getTimeInMillis());
+                        String selectedDate = Controller.getSdf().format(calendar.getTimeInMillis());
                         editText.setText(selectedDate);
                     }
                 },
@@ -155,19 +155,19 @@ public class Admin_update_tournament extends AppCompatActivity {
             if(TextUtils.isEmpty(tName) || TextUtils.isEmpty(tStart) || TextUtils.isEmpty(tEnd)){
                 Toast.makeText(Admin_update_tournament.this, "Please Complete all fields", Toast.LENGTH_SHORT).show();
             }else{
-                Date sDate = controller.getSdf().parse(tStart);
-                Date eDate = controller.getSdf().parse(tEnd);
+                Date sDate = Controller.getSdf().parse(tStart);
+                Date eDate = Controller.getSdf().parse(tEnd);
                 Date today = new Date();
 
                 Calendar cal1 = Calendar.getInstance();
-                cal1.setTime(sDate);
+                cal1.setTime(Objects.requireNonNull(sDate));
                 cal1.set(Calendar.HOUR_OF_DAY, 0);
                 cal1.set(Calendar.MINUTE, 0);
                 cal1.set(Calendar.SECOND, 0);
                 cal1.set(Calendar.MILLISECOND, 0);
 
                 Calendar cal2 = Calendar.getInstance();
-                cal2.setTime(eDate);
+                cal2.setTime(Objects.requireNonNull(eDate));
                 cal2.set(Calendar.HOUR_OF_DAY, 0);
                 cal2.set(Calendar.MINUTE, 0);
                 cal2.set(Calendar.SECOND, 0);

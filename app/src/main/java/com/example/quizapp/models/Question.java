@@ -14,7 +14,7 @@ public class Question {
         this.correctAnswer = correctAnswer;
         this.incorrectAnswers = incorrectAnswers;
     }
-    public Question(){};
+    public Question(){}
 
     public String getQuestion() {
         return question;

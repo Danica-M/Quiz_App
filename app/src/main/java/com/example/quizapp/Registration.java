@@ -47,7 +47,7 @@ public class Registration extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String fName, lName, licence, email, pass, pass2;
+                String fName, lName, email, pass, pass2;
                 fName = edNameF.getText().toString().toUpperCase().trim();
                 lName = edNameL.getText().toString().toUpperCase().trim();
                 email = edEmail.getText().toString();
@@ -56,9 +56,9 @@ public class Registration extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(fName) || TextUtils.isEmpty(lName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
                     Toast.makeText(Registration.this, "Registration form incomplete", Toast.LENGTH_SHORT).show();
-                } else if(!Controller.validateString(fName)){
+                } else if(Controller.validateString(fName)){
                     Toast.makeText(Registration.this, "Invalid character in firstname field", Toast.LENGTH_SHORT).show();
-                }else if(!Controller.validateString(lName)){
+                }else if(Controller.validateString(lName)){
                     Toast.makeText(Registration.this, "Invalid character in lastname field", Toast.LENGTH_SHORT).show();
                 }  else if (!pass.equals(pass2)) {
                     Toast.makeText(Registration.this, "Password does not match", Toast.LENGTH_SHORT).show();

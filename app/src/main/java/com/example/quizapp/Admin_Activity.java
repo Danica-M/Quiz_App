@@ -6,18 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
+
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
+
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
+
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -32,8 +29,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+
 
 public class Admin_Activity extends AppCompatActivity {
 
@@ -112,9 +108,10 @@ public class Admin_Activity extends AppCompatActivity {
     }
 
     public void getAllTournament(){
-        DatabaseReference tourRef = controller.getReference().child("tournaments");
+        DatabaseReference tourRef = Controller.getReference().child("tournaments");
         Query query = tourRef.orderByChild("startDate");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot tourItems: snapshot.getChildren()){

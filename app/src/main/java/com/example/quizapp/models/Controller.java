@@ -12,28 +12,31 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Controller {
 
-    private FirebaseDatabase firebaseDatabase;
     private static DatabaseReference reference;
     private static SimpleDateFormat sdf;
     public static User currentUser;
 
 
     public Controller() {
-        this.firebaseDatabase = FirebaseDatabase.getInstance();
-        this.reference = firebaseDatabase.getReference();
-        this.sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        reference = firebaseDatabase.getReference();
+        sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     }
 
     public static User getCurrentUser() {
@@ -49,13 +52,11 @@ public class Controller {
     }
 
     public static String getApiCategoryLookup() {
-        String apiCategoryLookup = "https://opentdb.com/api_category.php";
-        return apiCategoryLookup;
+        return "https://opentdb.com/api_category.php";
     }
 
     public static String getApiUrl() {
-        String apiUrl = "https://opentdb.com/api.php?amount=10";
-        return apiUrl;
+        return "https://opentdb.com/api.php?amount=10";
     }
 
     public static DatabaseReference getReference() {
@@ -67,7 +68,7 @@ public class Controller {
             String tournamentID = reference.push().getKey();
             Tournament tournament = new Tournament(tournamentID, tName, tCategory, tDifficulty, tStart, tEnd, tStatus,0);
             tournament.setQuestions(questionList);
-            reference.child("tournaments").child(tournamentID).setValue(tournament);
+            reference.child("tournaments").child(Objects.requireNonNull(tournamentID)).setValue(tournament);
             return tournament;
         }catch(Exception e){
             Log.d("TAG", "error: "+e.getMessage());
@@ -107,7 +108,7 @@ public class Controller {
 
     public void addTournamentParticipants(String tournamentID, TournamentResultRecord part, int like){
         try{
-            int tLikes;
+
             DatabaseReference tRef = reference.child("tournaments").child(tournamentID);
             tRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -117,7 +118,7 @@ public class Controller {
                         int tLikes = tournament.getLike() + like;
                         List<TournamentResultRecord> participants = tournament.getParticipants();
                         if(participants==null){
-                            participants = new ArrayList<TournamentResultRecord>();
+                            participants = new ArrayList<>();
                         }
                         participants.add(part);
                         tRef.child("like").setValue(tLikes);
@@ -131,12 +132,60 @@ public class Controller {
                 }
             });
 
-
-
         }catch(Exception e){
-
+            throw new RuntimeException(e);
         }
     }
+
+    //when app loads it will update the status of the game
+    public void updateTournamentStatus(Calendar tDate){
+
+        DatabaseReference tReference = reference.child("tournaments");
+        tReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot tourItems: snapshot.getChildren()){
+                    Tournament tournament = tourItems.getValue(Tournament.class);
+                    try {
+                        assert tournament != null;
+                        Date eDate = getSdf().parse(tournament.getEndDate());
+                        Calendar cal2 = Calendar.getInstance();
+                        cal2.setTime(Objects.requireNonNull(eDate));
+                        cal2.set(Calendar.HOUR_OF_DAY, 0);
+                        cal2.set(Calendar.MINUTE, 0);
+                        cal2.set(Calendar.SECOND, 0);
+                        cal2.set(Calendar.MILLISECOND, 0);
+
+                        Date sDate = getSdf().parse(tournament.getStartDate());
+                        Calendar cal3 = Calendar.getInstance();
+                        cal3.setTime(Objects.requireNonNull(sDate));
+                        cal3.set(Calendar.HOUR_OF_DAY, 0);
+                        cal3.set(Calendar.MINUTE, 0);
+                        cal3.set(Calendar.SECOND, 0);
+                        cal3.set(Calendar.MILLISECOND, 0);
+
+                        DatabaseReference tournamentRef = reference.child("tournaments").child(tournament.getTournamentID());
+                        if(cal2.compareTo(tDate)<0){
+                            tournamentRef.child("status").setValue("PAST");
+                        }else if(cal3.compareTo(tDate)==0){
+                            tournamentRef.child("status").setValue("ONGOING");
+                        }
+
+                    } catch (ParseException e) {
+
+                        throw new RuntimeException(e);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public User registerUser(String userID, String fName, String lName, String email, String password) {
         try {
             User user = new User(userID, fName, lName, email, password, "player");
@@ -151,11 +200,7 @@ public class Controller {
     public static boolean validateString(String name) {
         Pattern pattern = Pattern.compile(".*\\d.*");
         Matcher matcher = pattern.matcher(name);
-        if (matcher.matches()) {
-            return false;
-        } else {
-            return true;
-        }
+        return matcher.matches();
     }
 
 }

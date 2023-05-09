@@ -1,5 +1,6 @@
 package com.example.quizapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.quizapp.Adapter;
 import com.example.quizapp.R;
@@ -26,14 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_ongoing#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class fragment_ongoing extends Fragment {
     Controller controller;
-    private RecyclerView ongoingRecycler;
     private Adapter adapter;
     private TextView none1;
     private ArrayList<Tournament> oTournaments;
@@ -43,39 +38,19 @@ public class fragment_ongoing extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public fragment_ongoing() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_ongoing.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragment_ongoing newInstance(String param1, String param2) {
-        fragment_ongoing fragment = new fragment_ongoing();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         controller = new Controller();
         oTournaments = new ArrayList<>();
 
@@ -88,10 +63,12 @@ public class fragment_ongoing extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
 
         none1 = view.findViewById(R.id.none1);
-        ongoingRecycler = view.findViewById(R.id.onRecycler);
+        none1.setVisibility(View.GONE);
+        RecyclerView ongoingRecycler = view.findViewById(R.id.onRecycler);
         ongoingRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        getOngoingTournament();
 
+
+        getOngoingTournament();
         adapter = new Adapter(getContext(), oTournaments);
         adapter.notifyDataSetChanged();
         ongoingRecycler.setAdapter(adapter);
@@ -102,23 +79,30 @@ public class fragment_ongoing extends Fragment {
 
     public void getOngoingTournament(){
 
-        DatabaseReference tourRef =  controller.getReference().child("tournaments");
+        DatabaseReference tourRef =  Controller.getReference().child("tournaments");
         Query query = tourRef.orderByChild("startDate");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for(DataSnapshot tourItems: snapshot.getChildren()){
                     Tournament tournament = tourItems.getValue(Tournament.class);
                     if(tournament != null && tournament.getStatus().equals("ONGOING")){
-//                        oTournaments.add(tournament);
-                        if(tournament.getParticipants() != null){
+                        boolean found = false;
+                        if(tournament.getParticipants()!=null){
                             for (TournamentResultRecord result : tournament.getParticipants()) {
                                 if (result.getTourPlayerID().equals(Controller.getCurrentUser().getUserID())) {
+                                    found = true;
+                                    break;
 
-                                }else{oTournaments.add(tournament);}
+                                }
                             }
-                        }else{oTournaments.add(tournament);}
+                        }
+
+                        if(!found){
+                            oTournaments.add(tournament);
+                        }
 
 
                     }

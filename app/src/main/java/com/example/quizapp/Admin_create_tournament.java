@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Admin_create_tournament extends AppCompatActivity {
 
@@ -49,7 +51,6 @@ public class Admin_create_tournament extends AppCompatActivity {
     Spinner category;
     RadioGroup difficulty;
 
-    Integer selectedCategory;
     ArrayList<Integer> categoryIDs;
     ArrayList<String> categories;
 
@@ -72,6 +73,7 @@ public class Admin_create_tournament extends AppCompatActivity {
         difficulty = findViewById(R.id.difficulty);
         difficulty.check(difficulty.getChildAt(0).getId());
         getAllCategories();
+
 
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,8 +116,9 @@ public class Admin_create_tournament extends AppCompatActivity {
 
         if (dType == 1){
             try {
-                Date date = null;
-                date = controller.getSdf().parse(String.valueOf(startDate.getText()));
+
+                Date date = Controller.getSdf().parse(String.valueOf(startDate.getText()));
+                assert date != null;
                 calendar.setTime(date);
                 calendar.add(Calendar.DAY_OF_YEAR,1);
             } catch (ParseException e) {
@@ -131,7 +134,7 @@ public class Admin_create_tournament extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         calendar.set(year, month, day);
                         // Update the edit text with the selected date
-                        String selectedDate = controller.getSdf().format(calendar.getTimeInMillis());
+                        String selectedDate = Controller.getSdf().format(calendar.getTimeInMillis());
                         editText.setText(selectedDate);
                     }
                 },
@@ -151,14 +154,13 @@ public class Admin_create_tournament extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
 
                             JSONArray jResponse = jsonObject.getJSONArray("trivia_categories");
-                            ArrayList<String> list = new ArrayList<String>();
+
                             for(int i = 0; i < jResponse.length(); i++){
                                 JSONObject arrayItem = jResponse.getJSONObject(i);
-                                list.add(arrayItem.getString("name"));
                                 categoryIDs.add(arrayItem.getInt("id"));
                                 categories.add(arrayItem.getString("name"));
                             }
-                            category.setAdapter(new ArrayAdapter<String>(Admin_create_tournament.this, android.R.layout.simple_spinner_dropdown_item,categories ));
+                            category.setAdapter(new ArrayAdapter<>(Admin_create_tournament.this, android.R.layout.simple_spinner_dropdown_item,categories ));
                         } catch (JSONException e) {
                             Toast.makeText(Admin_create_tournament.this, "error"+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -190,19 +192,19 @@ public class Admin_create_tournament extends AppCompatActivity {
             if(TextUtils.isEmpty(tName) || TextUtils.isEmpty(tStart) || TextUtils.isEmpty(tEnd)){
                 Toast.makeText(Admin_create_tournament.this, "Please Complete all fields", Toast.LENGTH_SHORT).show();
             }else{
-                Date sDate = controller.getSdf().parse(tStart);
-                Date eDate = controller.getSdf().parse(tEnd);
+                Date sDate = Controller.getSdf().parse(tStart);
+                Date eDate = Controller.getSdf().parse(tEnd);
                 Date today = new Date();
 
                 Calendar cal1 = Calendar.getInstance();
-                cal1.setTime(sDate);
+                cal1.setTime(Objects.requireNonNull(sDate));
                 cal1.set(Calendar.HOUR_OF_DAY, 0);
                 cal1.set(Calendar.MINUTE, 0);
                 cal1.set(Calendar.SECOND, 0);
                 cal1.set(Calendar.MILLISECOND, 0);
 
                 Calendar cal2 = Calendar.getInstance();
-                cal2.setTime(eDate);
+                cal2.setTime(Objects.requireNonNull(eDate));
                 cal2.set(Calendar.HOUR_OF_DAY, 0);
                 cal2.set(Calendar.MINUTE, 0);
                 cal2.set(Calendar.SECOND, 0);
@@ -262,6 +264,7 @@ public class Admin_create_tournament extends AppCompatActivity {
                                 questionList.add(questionObj);
                                 }
                             Tournament t = controller.addTournament(tName,categories.get(tCategory), tDifficulty, tStart, tEnd, tStatus, questionList);
+
                             if(t!=null){
                                 Toast.makeText(Admin_create_tournament.this, "Tournament created successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Admin_create_tournament.this, Admin_Activity.class);

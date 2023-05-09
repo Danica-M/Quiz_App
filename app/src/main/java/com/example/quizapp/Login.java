@@ -1,16 +1,13 @@
 package com.example.quizapp;
 
-import static android.widget.Toast.LENGTH_SHORT;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Login extends AppCompatActivity {
@@ -35,6 +34,7 @@ public class Login extends AppCompatActivity {
     EditText l_email, l_pass;
     Button signIn, signUp;
     FirebaseAuth mAuth;
+    Controller controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,17 @@ public class Login extends AppCompatActivity {
         signIn = findViewById(R.id.signInBtn);
         signUp = findViewById(R.id.goToSignUp);
         mAuth = FirebaseAuth.getInstance();
+
+        controller = new Controller();
+        Date today = new Date();
+        Calendar tDate = Calendar.getInstance();
+        tDate.setTime(today);
+        tDate.set(Calendar.HOUR_OF_DAY, 0);
+        tDate.set(Calendar.MINUTE, 0);
+        tDate.set(Calendar.SECOND, 0);
+        tDate.set(Calendar.MILLISECOND, 0);
+
+        controller.updateTournamentStatus(tDate);
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.TournamentResultRecord;
 
-import org.w3c.dom.Text;
 
 public class Quiz_Result extends AppCompatActivity {
 
@@ -19,6 +19,7 @@ public class Quiz_Result extends AppCompatActivity {
     TextView result;
     String tourID, quizScore, quizLength;
     Button likeBtn, dislikeBtn;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class Quiz_Result extends AppCompatActivity {
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            TournamentResultRecord rec = new TournamentResultRecord(Controller.getCurrentUser().getUserID(), Integer.valueOf(quizScore));
+            TournamentResultRecord rec = new TournamentResultRecord(Controller.getCurrentUser().getUserID(), quizScore);
             controller.addTournamentParticipants(tourID, rec, 1);
             onBackPressed();
             }
@@ -48,7 +49,7 @@ public class Quiz_Result extends AppCompatActivity {
         dislikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TournamentResultRecord rec = new TournamentResultRecord(Controller.getCurrentUser().getUserID(), Integer.valueOf(quizScore));
+                TournamentResultRecord rec = new TournamentResultRecord(Controller.getCurrentUser().getUserID(), quizScore);
                 controller.addTournamentParticipants(tourID, rec, 0);
                 onBackPressed();
             }

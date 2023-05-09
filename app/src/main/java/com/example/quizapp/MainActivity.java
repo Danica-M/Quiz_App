@@ -2,23 +2,21 @@ package com.example.quizapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+
 
 import com.example.quizapp.fragments.Fragment_past;
 import com.example.quizapp.fragments.Fragment_upcoming;
 import com.example.quizapp.fragments.fragment_ongoing;
-import com.example.quizapp.models.Controller;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView .OnNavigationItemSelectedListener {
 
@@ -35,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light"
+    android:background="@drawable/bg1"
     tools:context=".Admin_create_tournament">
 
     <EditText
@@ -14,7 +14,6 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/edittext_rounded"
         android:drawableLeft="@drawable/icon_date"
-        android:editable="false"
         android:ems="10"
         android:hint="End Date"
         android:inputType="date"

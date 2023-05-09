@@ -25,23 +25,25 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="70dp"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/searchView"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/searchView"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
         android:clickable="true"
         app:backgroundTint="@color/green"
-        app:layout_constraintBottom_toTopOf="@+id/exitBtn"
-        app:layout_constraintEnd_toEndOf="@+id/exitBtn"
-        app:layout_constraintStart_toStartOf="@+id/exitBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/exitBtn"
+        app:layout_constraintEnd_toStartOf="@+id/exitBtn"
+        app:layout_constraintTop_toTopOf="@+id/exitBtn"
         app:srcCompat="@drawable/icon_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
