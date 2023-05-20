@@ -63,8 +63,6 @@ public class Login extends AppCompatActivity {
                 email = l_email.getText().toString();
                 pass = l_pass.getText().toString();
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
-                    Log.d("TAG", "clicked");
-
                     Toast.makeText(getBaseContext(), "Login form incomplete", Toast.LENGTH_SHORT).show();
                 } else {
                     mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

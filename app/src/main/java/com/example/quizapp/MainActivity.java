@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case R.id.past:
-
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.flFragment, new Fragment_past())
