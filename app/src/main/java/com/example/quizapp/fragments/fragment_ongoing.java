@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.quizapp.Adapter;
+import com.example.quizapp.models.Adapter;
 import com.example.quizapp.R;
 import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;

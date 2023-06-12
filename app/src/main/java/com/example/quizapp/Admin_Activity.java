@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.quizapp.models.Adapter;
 import com.example.quizapp.models.Controller;
 import com.example.quizapp.models.Tournament;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

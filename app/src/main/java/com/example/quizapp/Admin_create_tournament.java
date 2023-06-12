@@ -226,7 +226,7 @@ public class Admin_create_tournament extends AppCompatActivity {
                     }else{
                         tStatus = "UPCOMING";
                     }
-                    Toast.makeText(this, "cat: "+categories.get(category.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "cat: "+categories.get(category.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
                     getTournament(tName,category.getSelectedItemPosition(),tDifficulty,tStart,tEnd,tStatus);
                 }
             }

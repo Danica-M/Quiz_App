@@ -1,4 +1,4 @@
-package com.example.quizapp;
+package com.example.quizapp.models;
 
 import android.content.Context;
 
@@ -13,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.quizapp.models.Controller;
-import com.example.quizapp.models.Tournament;
-import com.example.quizapp.models.TournamentResultRecord;
+import com.example.quizapp.Admin_update_tournament;
+import com.example.quizapp.R;
+import com.example.quizapp.User_Tournament_Activity;
 
 
 import java.util.ArrayList;
