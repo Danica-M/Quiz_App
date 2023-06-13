@@ -221,7 +221,7 @@ public class Admin_create_tournament extends AppCompatActivity {
                 if(result>0) {
                     Toast.makeText(Admin_create_tournament.this, "End date must be after start date", Toast.LENGTH_SHORT).show();
                 }else {
-                    if(cal3.compareTo(cal1)==0){
+                    if(cal1.compareTo(cal3)<=0){
                         tStatus = "ONGOING";
                     }else{
                         tStatus = "UPCOMING";

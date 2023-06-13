@@ -110,7 +110,7 @@ public class Admin_Activity extends AppCompatActivity {
 
     public void getAllTournament(){
         DatabaseReference tourRef = Controller.getReference().child("tournaments");
-        Query query = tourRef.orderByChild("startDate");
+        Query query = tourRef.orderByChild("status");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -121,11 +121,8 @@ public class Admin_Activity extends AppCompatActivity {
                         allTournaments.add(tournament);
                     }
                 }
-                Log.d("TAG", "size: "+allTournaments.size());
                 if(allTournaments.size()==0){Toast.makeText(Admin_Activity.this, "No past tournament", Toast.LENGTH_LONG).show();}
-
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override

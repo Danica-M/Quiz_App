@@ -42,7 +42,8 @@ public class Quiz_Result extends AppCompatActivity {
             public void onClick(View view) {
             TournamentResultRecord rec = new TournamentResultRecord(Controller.getCurrentUser().getUserID(), quizScore);
             controller.addTournamentParticipants(tourID, rec, 1);
-            onBackPressed();
+                Intent intent1 = new Intent(Quiz_Result.this, MainActivity.class);
+                startActivity(intent1);
             }
         });
 
@@ -51,7 +52,8 @@ public class Quiz_Result extends AppCompatActivity {
             public void onClick(View view) {
                 TournamentResultRecord rec = new TournamentResultRecord(Controller.getCurrentUser().getUserID(), quizScore);
                 controller.addTournamentParticipants(tourID, rec, 0);
-                onBackPressed();
+                Intent intent1 = new Intent(Quiz_Result.this, MainActivity.class);
+                startActivity(intent1);
             }
         });
 
