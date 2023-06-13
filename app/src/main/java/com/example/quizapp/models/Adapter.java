@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizapp.Admin_update_tournament;
 import com.example.quizapp.R;
+import com.example.quizapp.Tournament_Confirmation;
 import com.example.quizapp.User_Tournament_Activity;
 
 
@@ -56,8 +57,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     holder.tourHolder.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent bIntent = new Intent(view.getContext(), User_Tournament_Activity.class);
+                            Intent bIntent = new Intent(view.getContext(), Tournament_Confirmation.class);
                             bIntent.putExtra("tourID", clickedTournament.getTournamentID());
+                            bIntent.putExtra("name", clickedTournament.getName());
+                            bIntent.putExtra("cat", clickedTournament.getCategory());
+                            bIntent.putExtra("dif", clickedTournament.getDifficulty());
+                            bIntent.putExtra("sDate", clickedTournament.getStartDate());
+                            bIntent.putExtra("eDate", clickedTournament.getEndDate());
                             bIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(bIntent);
                         }

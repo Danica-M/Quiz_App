@@ -35,7 +35,7 @@ public class User_Tournament_Activity extends AppCompatActivity {
 
     Question ques;
     TextView question, tName, score, total;
-    Button submitBtn;
+    Button submitBtn, cancel;
     RadioGroup userAnswer;
     RadioButton op1, op2, op3, op4;
     ProgressBar progress;
@@ -55,11 +55,19 @@ public class User_Tournament_Activity extends AppCompatActivity {
         tName = findViewById(R.id.tName);
         question = findViewById(R.id.question);
         submitBtn = findViewById(R.id.submitBtn);
+        cancel = findViewById(R.id.exitTourBtn);
         userAnswer = findViewById(R.id.userAnswer);
         op1 = findViewById(R.id.rb1);
         op2 = findViewById(R.id.rb2);
         op3 = findViewById(R.id.rb3);
         op4 = findViewById(R.id.rb4);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
@@ -100,6 +108,7 @@ public class User_Tournament_Activity extends AppCompatActivity {
 
             }
         });
+
 
     }
 

@@ -11,7 +11,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -116,7 +115,6 @@ public class Admin_create_tournament extends AppCompatActivity {
 
         if (dType == 1){
             try {
-
                 Date date = Controller.getSdf().parse(String.valueOf(startDate.getText()));
                 assert date != null;
                 calendar.setTime(date);
@@ -243,14 +241,12 @@ public class Admin_create_tournament extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.d("TAG", "String: "+getApiUrl() + "category=" + categoryIDs.get(tCategory) + "&difficulty=" + tDifficulty + "&type=multiple");
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("results");
                             List<Question> questionList = new ArrayList<>();
                             // Loop through the JSON array
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject item = jsonArray.getJSONObject(i);
-
                                 // Get the details of the question
                                 String question = item.getString("question");
                                 String correctAnswer = item.getString("correct_answer");
@@ -273,19 +269,15 @@ public class Admin_create_tournament extends AppCompatActivity {
                             else{
                                 Toast.makeText(Admin_create_tournament.this, "Tournament creation is unsuccessfully", Toast.LENGTH_SHORT).show();
                             }
-
                             } catch (JSONException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
-
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }

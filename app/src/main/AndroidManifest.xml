@@ -12,6 +12,9 @@
         android:theme="@style/Theme.QuizApp"
         tools:targetApi="31">
         <activity
+            android:name=".Tournament_Confirmation"
+            android:exported="false" />
+        <activity
             android:name=".Quiz_Result"
             android:exported="false" />
         <activity

@@ -171,17 +171,33 @@
         android:id="@+id/submitBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/orange"
         android:text="Submit"
         android:textColor="@color/light"
         android:textSize="16sp"
         android:textStyle="bold"
         app:cornerRadius="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/exitTourBtn"
+        app:layout_constraintEnd_toEndOf="@+id/exitTourBtn"
+        app:layout_constraintStart_toStartOf="@+id/exitTourBtn" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exitTourBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/light_grey"
+        android:text="Exit Tournament"
+        android:textColor="@color/dark_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/userAnswer"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/userAnswer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
