@@ -1,7 +1,6 @@
 package com.example.quizapp.models;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,6 @@ public class Participated_Adapter extends RecyclerView.Adapter<Participated_Adap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Tournament clickedTournament = tournamentList.get(position);
         holder.name.setText(tournamentList.get(position).getName());
         holder.category.setText(tournamentList.get(position).getCategory());
         holder.difficulty.setText(tournamentList.get(position).getDifficulty().toUpperCase());

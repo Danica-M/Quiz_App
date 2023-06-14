@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.quizapp.Admin_update_tournament;
 import com.example.quizapp.R;
 import com.example.quizapp.Tournament_Confirmation;
-import com.example.quizapp.User_Tournament_Activity;
 
 
 import java.util.ArrayList;
