@@ -89,16 +89,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     context.startActivity(bIntent);
                 }
             });
-        }else{
-            if (tournamentList.get(position).getParticipants() != null) {
-                for (TournamentResultRecord result : tournamentList.get(position).getParticipants()) {
-                    if (result.getTourPlayerID().equals(Controller.getCurrentUser().getUserID())) {
-                        holder.tourHolder.setBackgroundResource(R.color.light_grey);
-                        holder.tourHolder.setClickable(false);
-                        break;
-                    }
-                }
-            }
         }
     }
 

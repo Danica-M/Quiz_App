@@ -13,6 +13,10 @@
         android:title="Past"
         android:icon="@drawable/icon_past"/>
     <item
+        android:id="@+id/participated"
+        android:title="Participated"
+        android:icon="@drawable/icon_participated"/>
+    <item
         android:id="@+id/logout"
         android:title="Logout"
         android:icon="@drawable/icon_exit"/>

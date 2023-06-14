@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 
+import com.example.quizapp.fragments.Fragment_participated;
 import com.example.quizapp.fragments.Fragment_past;
 import com.example.quizapp.fragments.Fragment_upcoming;
 import com.example.quizapp.fragments.fragment_ongoing;
@@ -51,12 +52,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
                 return true;
 
+            case R.id.participated:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, new Fragment_participated())
+                        .commit();
+                return true;
+
             case R.id.past:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.flFragment, new Fragment_past())
                         .commit();
                 return true;
+
             case R.id.logout:
                 logoutUser();
 

@@ -67,12 +67,10 @@ public class fragment_ongoing extends Fragment {
         RecyclerView ongoingRecycler = view.findViewById(R.id.onRecycler);
         ongoingRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
         getOngoingTournament();
         adapter = new Adapter(getContext(), oTournaments);
         adapter.notifyDataSetChanged();
         ongoingRecycler.setAdapter(adapter);
-
         return view;
     }
 
